@@ -4,25 +4,20 @@
         <title>Welcome!</title>
         </head>
         <body>
-            <?php
-                $firstName = $_POST['first'];
-                $lastName = $_POST['last'];
-                $username = $_POST['user'];
-                $userEmail = $_POST['email'];
-                $password = $_POST['pass'];
-                $hashPassword = password_hash($password, PASSWORD_DEFAULT);
-                $sqlPost = "INSERT INTO UserInfo (firstName, lastName, userName, userEmail, password) VALUES ('$firstName','$lastName','$username','$userEmail','$hashPassword')";
+            <?php//here we will take the information 
+                $firstName = $_POST['first'];//get the firstname
+                $lastName = $_POST['last'];//get the lastname
+                $username = $_POST['user'];//get the username
+                $userEmail = $_POST['email'];//get the email
+                $password = $_POST['pass'];//get the password
+                $hashPassword = password_hash($password, PASSWORD_DEFAULT);//hash the password for security purposes
+                $sqlPost = "INSERT INTO UserInfo (firstName, lastName, userName, userEmail, password) VALUES ('$firstName','$lastName','$username','$userEmail','$hashPassword')";//run this query
                 try {
-                    $hostname = 'localhost';
-                    $userName = 'loginUser';
-                    $password = 'logmeinplease';
-                    $database = 'loginInfo';
-                    $mysqli = mysqli_connect($hostname, $userName, $password, $database); 
-                    if ($mysqli->query($sqlPost)) {
-                        echo "You're all Set!";
-                    } else {
+                    include('../config/config.php');//get db info from config file
+                    if ($mysqli->query($sqlPost)) {//run the query if executed will
+                        echo "You're all Set!";//return this
                     }
-                } catch (Exception $e) {
+                } catch (Exception $e) {//catch just in case
                     echo $e;
                 }
             ?>
