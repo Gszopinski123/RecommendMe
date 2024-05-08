@@ -17,7 +17,7 @@
                     include('../config/config.php');//get db info from config file
                     if ($mysqli->query($sqlPost)) {//run the query if executed will
                         echo "You're all Set!";//return this
-                        setcookie('username',$firstName, time() + 60 * 60 * 24 * 7,'/');//will store a cookie in users browser
+                        setcookie('username',"$userEmail $password", time() + 60 * 60 * 24 * 7,'/');//will store a cookie in users browser
                         header("Location: http://192.168.1.91/login/Welcome.php", true, 301);//will redirect the user
                     }
                 } catch (Exception $e) {//catch just in case

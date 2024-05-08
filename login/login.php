@@ -5,7 +5,7 @@
         </head>
         <body>
             <form method="POST" action="login.php"><!-- this form on submit will send right back to this page where the php will be executed--> 
-                <input type="text" name="email" placeholder="Email"><br><!--user will enter email -->
+                <input type="email" name="email" placeholder="Email" ><br><!--user will enter email -->
                 <input type="password" name="pass" placeholder="Password"><br><!--user will enter their password -->
                 <input type="submit"><!-- on click the php will be executed -->
             </form><!--end of form -->
@@ -24,6 +24,7 @@
                         $_SESSION['lastname'] = $row['lastName'];//save the lastname
                         $_SESSION['password'] = $row['password'];//save the password hashed out use for later
                         $_SESSION['useremail'] = $email;//save user email
+                        $_SESSION['loggedin'] = true;//see if the user is logged in
                         header("Location: http://192.168.1.91/login/Welcome.php", true, 301);//if password is correct redirect
                     }
                 } catch (Exception $e) {//just in case
