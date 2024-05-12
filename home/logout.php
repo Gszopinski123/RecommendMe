@@ -5,4 +5,5 @@
         $_SESSION['loggedin'] = 0;//we set the session to logout
         //echo $_SESSION['loggedin'];//we return that the user is logged out
     }
+    //last updated 5/12/24 Broomy
 ?>

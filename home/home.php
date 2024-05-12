@@ -26,6 +26,8 @@
                 } else {//if not allow them to login 
                     echo "<a href='../login/login.php'>Please Login Here</a><br>";
                 }
+                //last updated 5/12/24 Broomy
+                //notes need to fix register upon register user that is currently logged in due to session or cookies is not logged out need to fix that 
             ?>
             <script>
                 function phpLogout() {//function to be used on click

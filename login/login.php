@@ -15,6 +15,10 @@
                 $sql = "SELECT * from UserInfo WHERE userEmail='$email'";//sql statement to get the associated password
                 try {
                     include('../config/config.php');//get the login info from config
+                    session_start();//start session to check if we are logged in
+                    if ($_SESSION['loggedin']) {//will not allow us to login until we are logged out
+                        header("Location: http://192.168.1.91/login/Welcome.php", true, 301);//redirect us
+                    }
                     $result = $mysqli->query($sql);//run the query and get the information
                     $row = $result->fetch_assoc();//now run the rows
                     if (password_verify($pass,$row['password'])) {//get the password column and check it against the inputted password
@@ -30,6 +34,7 @@
                 } catch (Exception $e) {//just in case
                     echo $e;
                 }
+                //last updated 5/12/24 Broomy
             ?>
         </body>
     </html>

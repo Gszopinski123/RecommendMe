@@ -45,6 +45,7 @@
 						if (upperCase(pass) && lowerCase(pass) && numbers(pass) && specialChar(pass) && pass.length >= 10) {return true;} //makes sure the password has all the requirements
 						else {return false;}//will return false if it doesnt
 					}
+					//last updated 5/12/24 Broomy
 				</script>
 			</form>
 		</body>
