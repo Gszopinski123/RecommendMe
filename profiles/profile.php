@@ -38,7 +38,9 @@
                 echo "\n";
                 $picture = $jsonData["$userId"]["profilePic"];
                 echo "<img src='$picture'></img>";
-                //last updated 5/13/24 Broomy
+                $pdf = $jsonData["$userId"]["posts"][0];
+                echo "<iframe src='$pdf'></iframe>";
+                //last updated 5/14/24 Broomy
             ?>
             <form action="upload.php" method="post" enctype="multipart/form-data">
             Select Profile Picture to upload:
@@ -53,7 +55,7 @@
             <input type="file" name="file" id="file">
             <input type="submit" value="Upload Image" name="submit">
             <input type="hidden" name="user" value="<?php print $userId?>">
-            <input type="hidden" name="post" value="picture">
+            <input type="hidden" name="post" value="post">
             </form>
 </body>
 </html>

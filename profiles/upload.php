@@ -20,8 +20,9 @@
             $jsonDecode = json_decode($json,true);//decode the file
             if ($type == "picture") {//see what type the file is suppose to go under as
                 $jsonDecode["$userName"]['profilePic'] = $phpPath;
-            } else {
-                //$arrLength = $jsonDecode["$usrName"]["posts"].length;
+            } else { 
+                echo count($jsonDecode["$userName"]["posts"]);
+                $jsonDecode["$userName"]["posts"][] = "$phpPath"; 
             }
             $jsonEncode = json_encode($jsonDecode,JSON_PRETTY_PRINT);//prepare for the data to go back to the json file
             file_put_contents($jsonFile,$jsonEncode . "\n");//save the newly added data
@@ -29,7 +30,7 @@
                 echo "Yes!";
             } else {
                 echo "Nope!";
-            }//last updated 5/13/24 Broomy
+            }//last updated 5/14/24 Broomy
         ?>
         </body>
     </html>
