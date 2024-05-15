@@ -6,9 +6,10 @@
         <body>
             <?php
                 //here we will take the information
+                
                 $firstName = $_POST['first'];//get the firstname
                 $lastName = $_POST['last'];//get the lastname
-                $username = $_POST['user'];//get the username
+                $username = strtolower($_POST['user']);//get the username
                 $userEmail = $_POST['email'];//get the email
                 $userPassword = $_POST['pass'];//get the password
                 $hashPassword = password_hash($userPassword, PASSWORD_DEFAULT);//hash the password for security purposes
@@ -21,12 +22,22 @@
                             setcookie('username',"", time() - 3600,'/');
                         }
                         setcookie('username',"$userEmail $userPassword", time() + 60 * 60 * 24 * 7,'/');//will store a cookie in users browser
-                        header("Location: http://192.168.1.91/login/Welcome.php", true, 301);//will redirect the user
+                        session_start();
+                        if (isset($_SESSION['loggedin'])) {
+                            if ($_SESSION['loggedin']) {
+                                $_SESSION['loggedin'] = 0;
+                                header("location: http://192.168.1.91/login/login.php", true, 301);
+                            } else {
+                                header("location: http://192.168.1.91/login/login.php", true, 301);
+                            }
+                        } else {
+                            header("location: http://192.168.1.91/login/login.php", true, 301);
+                        }
                     }
                 } catch (Exception $e) {//catch just in case
                     echo $e;
                 }
-                //last updated 5/12/24 Broomy
+                //last updated 5/15/24 Broomy
             ?>
     </body>
     </html>
