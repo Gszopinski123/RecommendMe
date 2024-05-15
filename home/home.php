@@ -22,11 +22,14 @@
                 }
                 include('../config/session.php');//see if a user is logged in or not
                 if ($loggedIn) {//if they are logged in allow them to logout
+                    echo "Welcome back ".$_SESSION["firstname"]." ".$_SESSION['lastname']."!<br><br>";
                     echo "<button onclick='phpLogout()'>Click here to logout!</button>";
                 } else {//if not allow them to login 
+                    echo "Welcome!<br><br>";
                     echo "<a href='../login/login.php'>Please Login Here</a><br>";
                 }
-                //last updated 5/12/24 Broomy
+                //last updated 5/15/24 Broomy
+                //notes need to fix register upon register user that is currently logged in due to session or cookies is not logged out need to fix that 
             ?>
             <script>
                 function phpLogout() {//function to be used on click

@@ -26,13 +26,13 @@
                     $_SESSION['password'] = $row['password'];//save the password hashed out use for later
                     $_SESSION['useremail'] = $userEmail;//save user email
                     $_SESSION['loggedin'] = 1;//see if the user is logged in
-                    header("Location: http://192.168.1.91/login/Welcome.php", true, 301);//if password is correct redirect
                 }
             } else {
                 echo "Please Login <a href='login.php'>Here</a>";
             }
         }
-        //last updated 5/12/24 Broomy
+        header("Location: http://192.168.1.91/Home/home.php", true, 301);//if password is correct redirect
+        //last updated 5/15/24 Broomy
     ?>
     </body>
 </html>
