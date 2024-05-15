@@ -1,0 +1,16 @@
+#profilePic {
+    height: 100pt;
+    width: 100pt;
+    border-radius: 50%;
+    position: fixed;
+}
+iframe {
+    display:block;
+    margin: auto;
+    height: 800pt;
+    width: 750pt;
+}
+#center {
+    text-align: center;
+}
+/*last updated 5/15/24 Broomy*/

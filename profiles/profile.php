@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="style.css">
         </head>
         <body>
-        <?php $userId = $_REQUEST['user'];?>
+        <?php $userId = strtolower($_REQUEST['user']);?>
             <?php
                 $path = "../userData/app.json";//path to access the user data
                 $json = file_get_contents($path);//open the file
@@ -31,31 +31,44 @@
                     header("Refresh:0");//refresh the page
                     
                 }
-                echo "<p id='user'>$userId</p>";//testing
-                echo $jsonData["$userId"]['fName'];
-                echo " ";
-                echo $jsonData["$userId"]['lName'];
-                echo "\n";
-                $picture = $jsonData["$userId"]["profilePic"];
-                echo "<img src='$picture'></img>";
-                $pdf = $jsonData["$userId"]["posts"][0];
-                echo "<iframe src='$pdf'></iframe>";
-                //last updated 5/14/24 Broomy
+                if ($jsonData["$userId"]['profilePic'] != "") {//see if the user has a photo in their data
+                    echo "<img id='profilePic'src=". $jsonData["$userId"]['profilePic']."></img>";
+                } else {// if not print default
+                    echo "<img id='profilePic'src='../userData/Avatar.jpg'></img>";
+                }
+                echo "<h1 id='center'>". $jsonData["$userId"]['uName'] ."</h1>";//print username
+                echo "<h2 id='center'>". $jsonData["$userId"]['fName'] ." ". $jsonData["$userId"]['lName'] ."</h2>";//print the first name and last name
+                echo "<br><br><br>";//make some line breaks
+                $arr = $jsonData["$userId"]['posts'];//get the array for posts
+                $arrlen = sizeof($jsonData["$userId"]['posts']);//get the number of posts
+                for ($i =0; $i< $arrlen; $i++) {//loop through the posts
+                    print "<iframe src=".$arr[$i]."></iframe>";//printout all the posts
+                }
+                //last updated 5/15/24 Broomy
             ?>
-            <form action="upload.php" method="post" enctype="multipart/form-data">
-            Select Profile Picture to upload:
-            <input type="file" name="file" id="file">
-            <input type="submit" value="Upload Image" name="submit">
-            <input type="hidden" name="user" value="<?php print $userId?>">
-            <input type="hidden" name="picture" value="picture">
-            </form>
-            <br><br><br><br><br>
-            <form action="upload.php" method="post" enctype="multipart/form-data">
-            Select Post to upload:
-            <input type="file" name="file" id="file">
-            <input type="submit" value="Upload Image" name="submit">
-            <input type="hidden" name="user" value="<?php print $userId?>">
-            <input type="hidden" name="post" value="post">
-            </form>
+            <?php
+            session_start();//see who is logged in
+            if (isset($_SESSION['loggedin'])) {
+                if ($_SESSION['loggedin']) {
+                    if ($_SESSION['username'] == $userId) {// if the user is logged in and on their account allow them to submit photos and posts
+                        echo "<form action='upload.php' method='post' enctype='multipart/form-data'>";
+                        echo "Select Profile Picture to upload:";
+                        echo '<input type="file" name="file" id="file">';
+                        echo "<input type='submit' value='Upload Image' name='submit'>";
+                        echo "<input type='hidden' name='user' value='$userId'>";
+                        echo "<input type='hidden' name='picture' value='picture'>";
+                        echo "</form>";
+                        echo "<form action='upload.php' method='post' enctype='multipart/form-data'>";
+                        echo "Select Post to upload:";
+                        echo "<input type='file' name='file' id='file'>";
+                        echo "<input type='submit' value='Upload Image' name='submit'>";
+                        echo "<input type='hidden' name='user' value='$userId'>";
+                        echo '<input type="hidden" name="post" value="post">';
+                        echo "</form>";
+                    }
+                }
+            }
+            
+            ?>
 </body>
 </html>
