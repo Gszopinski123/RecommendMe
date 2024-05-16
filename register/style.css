@@ -1,39 +1,3 @@
-#profilePic {
-    height: 100pt;
-    width: 100pt;
-    border-radius: 50%;
-    position: fixed;
-    margin-left: 1in;
-}
-iframe {
-    margin: auto;
-    height: 500pt;
-    width: 450pt;
-}
-#center {
-    text-align: center;
-}
-.centerItems {
-    display: grid;
-    grid-template-columns: repeat(8,ifr);
-}
-.item1 {
-    grid-column: 3;
-    grid-column-end: 3;
-}
-.item2 {
-    grid-column-start: 4;
-    grid-column-end: 4;
-}
-.fixed {
-    position: fixed;
-    margin-top: 2in;
-}
-.navCenter {
-    text-align: center;
-    position: fixed;
-    margin-left: 18.5in;
-}
 .dropbtn {
     padding: 16px;
     font-size: 16px;
@@ -70,4 +34,3 @@ iframe {
   
   /* Show the dropdown menu on hover */
   .dropdown:hover .dropdown-content {display: block;}
-/*last updated 5/16/24 Broomy*/

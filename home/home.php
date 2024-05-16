@@ -1,9 +1,21 @@
 <!DOCTYPE html lang="en-us">
     <html>
         <head>
+            <link rel="stylesheet" href="style.css">
+            <title>Home!</title>
         </head>
         <body>
             <?php
+                echo "
+                <div class='dropdown'>
+                    <button class='dropbtn'>Menu</button>
+                        <div class='dropdown-content'>
+                            <a href='../Home/home.php'>home</a>
+                            <a href='../login/login.php'>login</a>
+                            <a href='../login/index.php'>register</a>
+                        </div>
+                </div>
+                ";
                 session_start();//session to save users info so they staying across the server
                 if (isset($_COOKIE['username']) && (!isset($_SESSION['loggedin']))) {
                     include("../config/cookie.php");
@@ -28,8 +40,7 @@
                     echo "Welcome!<br><br>";
                     echo "<a href='../login/login.php'>Please Login Here</a><br>";
                 }
-                //last updated 5/15/24 Broomy
-                //notes need to fix register upon register user that is currently logged in due to session or cookies is not logged out need to fix that 
+                //last updated 5/16/24 Broomy
             ?>
             <script>
                 function phpLogout() {//function to be used on click

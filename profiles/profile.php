@@ -4,7 +4,17 @@
         <link rel="stylesheet" href="style.css">
         </head>
         <body>
-        <?php $userId = strtolower($_REQUEST['user']);?>
+        <?php 
+        if (isset($_REQUEST['user'])) {
+            if($_REQUEST['user'] == '') {
+                header("Location: http://192.168.1.91/Home/home.php",true,301);
+            }
+            $userId = strtolower($_REQUEST['user']);
+        } else {
+            header("Location: http://192.168.1.91/Home/home.php",true,301);
+        }
+        echo "<title>$userId's Page!</title>";
+        ?>
             <?php
                 $path = "../userData/app.json";//path to access the user data
                 $json = file_get_contents($path);//open the file
@@ -17,6 +27,9 @@
                     include("../config/config.php");//access the db
                     $result = $mysqli->query($sql);//access
                     $row = $result->fetch_assoc();//get info
+                    if (!($row["userName"])) {
+                        header("Location: http://192.168.1.91/Home/home.php",true,301);
+                    }
                     $jsonEncode->fName = $row['firstName'];//add all this info
                     $jsonEncode->lName = $row['lastName'];
                     $jsonEncode->uName = $row['userName'];
@@ -34,18 +47,38 @@
                 if ($jsonData["$userId"]['profilePic'] != "") {//see if the user has a photo in their data
                     echo "<img id='profilePic'src=". $jsonData["$userId"]['profilePic']."></img>";
                 } else {// if not print default
-                    echo "<img id='profilePic'src='../userData/Avatar.jpg'></img>";
+                    echo "<img id='profilePic' src='../userData/Avatar.jpg'></img>";
                 }
+                echo "
+                <div class='dropdown'>
+                    <button class='dropbtn'>Menu</button>
+                        <div class='dropdown-content'>
+                            <a href='../Home/home.php'>home</a>
+                            <a href='../login/login.php'>login</a>
+                            <a href='../login/index.php'>register</a>
+                        </div>
+                </div>
+                ";
+                echo "<p class='fixed'>
+                ".$jsonData["$userId"]["fName"]." ". $jsonData["$userId"]["lName"] . "
+                <br>Contact at: ". $jsonData["$userId"]['uEmail'] .
+                "</p>";
                 echo "<h1 id='center'>". $jsonData["$userId"]['uName'] ."</h1>";//print username
                 echo "<h2 id='center'>". $jsonData["$userId"]['fName'] ." ". $jsonData["$userId"]['lName'] ."</h2>";//print the first name and last name
                 echo "<br><br><br>";//make some line breaks
                 $arr = $jsonData["$userId"]['posts'];//get the array for posts
                 $arrlen = sizeof($jsonData["$userId"]['posts']);//get the number of posts
+                echo "<div class='centerItems'>";
                 for ($i =0; $i< $arrlen; $i++) {//loop through the posts
+                    echo "<div class='item".(($i%2)+1)."'>";
+                    echo "<p>Item</p>";
                     print "<iframe src=".$arr[$i]."></iframe>";//printout all the posts
+                    echo "</div>";
                 }
-                //last updated 5/15/24 Broomy
+                echo "</div>";
+                //last updated 5/16/24 Broomy
             ?>
+            <br><br><br><br><br>
             <?php
             session_start();//see who is logged in
             if (isset($_SESSION['loggedin'])) {

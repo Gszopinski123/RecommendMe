@@ -6,6 +6,18 @@
 			<title>Register!</title>
 		</head>
 		<body>
+			<?php
+				echo "
+				<div class='dropdown'>
+					<button class='dropbtn'>Menu</button>
+						<div class='dropdown-content'>
+							<a href='../Home/home.php'>home</a>
+							<a href='../login/login.php'>login</a>
+							<a href='../login/index.php'>register</a>
+						</div>
+				</div>
+				";
+			?>
 			<p>This is the Register page!</p>
 			<form name="register" onsubmit="return verify();"action="post.php" method="POST"><!--This will tell form what action to take and what to do -->
 				<input type="text" name="first" placeholder="First Name" required><br><!-- firstname input-->
@@ -45,10 +57,9 @@
 						if (upperCase(pass) && lowerCase(pass) && numbers(pass) && specialChar(pass) && pass.length >= 10) {return true;} //makes sure the password has all the requirements
 						else {return false;}//will return false if it doesnt
 					}
-					//last updated 5/12/24 Broomy
+					//last updated 5/16/24 Broomy
 				</script>
 			</form>
 		</body>
 
 	</html>
-
