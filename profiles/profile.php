@@ -5,15 +5,15 @@
         </head>
         <body>
         <?php 
-        if (isset($_REQUEST['user'])) {
-            if($_REQUEST['user'] == '') {
-                header("Location: http://192.168.1.91/Home/home.php",true,301);
+        if (isset($_REQUEST['user'])) {//this will is used to make sure pages for not existant users are entered
+            if($_REQUEST['user'] == '') {//one case
+                header("Location: http://192.168.1.91/Home/home.php",true,301);//redirect
             }
-            $userId = strtolower($_REQUEST['user']);
+            $userId = strtolower($_REQUEST['user']);//make all the usernames lowercase so we dont have a problem where there are mutliple different types of the same user
         } else {
-            header("Location: http://192.168.1.91/Home/home.php",true,301);
+            header("Location: http://192.168.1.91/Home/home.php",true,301);//redirect if there is no user tag
         }
-        echo "<title>$userId's Page!</title>";
+        echo "<title>$userId's Page!</title>";//title specific to the user
         ?>
             <?php
                 $path = "../userData/app.json";//path to access the user data
@@ -48,7 +48,7 @@
                     echo "<img id='profilePic'src=". $jsonData["$userId"]['profilePic']."></img>";
                 } else {// if not print default
                     echo "<img id='profilePic' src='../userData/Avatar.jpg'></img>";
-                }
+                }//nav bar for easy access accross the website
                 echo "
                 <div class='dropdown'>
                     <button class='dropbtn'>Menu</button>
@@ -59,21 +59,51 @@
                         </div>
                 </div>
                 ";
-                echo "<p class='fixed'>
-                ".$jsonData["$userId"]["fName"]." ". $jsonData["$userId"]["lName"] . "
-                <br>Contact at: ". $jsonData["$userId"]['uEmail'] .
-                "</p>";
+                session_start();//start to allow the user to remove aspects of their profile
+                if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {//do some checks make sure the user is even logged in first
+                    if ($_SESSION['username'] == $userId) {//check their userId
+                        echo "<p class='fixed'>
+                        <a href='remove.php?profile=1&user=$userId'>Remove Profile Picture</a><br>
+                        ".$jsonData["$userId"]["fName"]." ". $jsonData["$userId"]["lName"] . "
+                        <br>Contact at: ". $jsonData["$userId"]['uEmail'] .
+                        "</p>";
+                    } else {//if they dont match dont allow them to edit
+                        echo "<p class='fixed'>
+                        ".$jsonData["$userId"]["fName"]." ". $jsonData["$userId"]["lName"] . "
+                        <br>Contact at: ". $jsonData["$userId"]['uEmail'] .
+                        "</p>";
+                    }
+                } else {//if they are not even logged in dont allow them to edit it
+                    echo "<p class='fixed'>
+                    ".$jsonData["$userId"]["fName"]." ". $jsonData["$userId"]["lName"] . "
+                    <br>Contact at: ". $jsonData["$userId"]['uEmail'] .
+                    "</p>"; 
+                }
                 echo "<h1 id='center'>". $jsonData["$userId"]['uName'] ."</h1>";//print username
                 echo "<h2 id='center'>". $jsonData["$userId"]['fName'] ." ". $jsonData["$userId"]['lName'] ."</h2>";//print the first name and last name
                 echo "<br><br><br>";//make some line breaks
                 $arr = $jsonData["$userId"]['posts'];//get the array for posts
                 $arrlen = sizeof($jsonData["$userId"]['posts']);//get the number of posts
+                session_start();
                 echo "<div class='centerItems'>";
                 for ($i =0; $i< $arrlen; $i++) {//loop through the posts
-                    echo "<div class='item".(($i%2)+1)."'>";
-                    echo "<p>Item</p>";
-                    print "<iframe src=".$arr[$i]."></iframe>";//printout all the posts
-                    echo "</div>";
+                    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {//see if the user is logged in before allowing them to edit
+                        if ($_SESSION['username'] == $userId) {//if the usernames match allow them to edit
+                            echo "<div class='item".(($i%2)+1)."'>";
+                            echo "<p>Remove this <a href='remove.php?post=$i&user=$userId'>click here!</a></p>";
+                            print "<iframe src=".$arr[$i]."></iframe>";//printout all the posts
+                            echo "</div>";
+                        } else {//if usernames dont match dont let them edit
+                            echo "<div class='item".(($i%2)+1)."'>";
+                            print "<iframe src=".$arr[$i]."></iframe>";//printout all the posts
+                            echo "</div>";
+                        }
+                    } else {//if they arent even logged in do not let them touch
+                        echo "<div class='item".(($i%2)+1)."'>";
+                        print "<iframe src=".$arr[$i]."></iframe>";//printout all the posts
+                        echo "</div>";
+                    }
+                    
                 }
                 echo "</div>";
                 //last updated 5/16/24 Broomy
