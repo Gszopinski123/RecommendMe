@@ -60,7 +60,7 @@
                                     <a href='../Home/home.php'>home</a>
                                     <a href='../profiles/profile.php?user=$userId'>My page</a>
                                     <a href='../login/index.php'>register</a>
-                                    <a href='logout.php?logout=1&type=0'>logout</a>
+                                    <a href='../Home/logout.php?logout=1&type=0'>logout</a>
                                 </div>
                         </div>
                         ";
