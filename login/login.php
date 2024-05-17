@@ -17,6 +17,13 @@
                         </div>
                 </div>
                 ";
+            ?>
+            <form id="center" method="POST" action="login.php"><!-- this form on submit will send right back to this page where the php will be executed--> 
+                <input type="email" name="email" placeholder="Email" ><br><br><!--user will enter email -->
+                <input type="password" name="pass" placeholder="Password"><br><br><!--user will enter their password -->
+                <input type="submit"><!-- on click the php will be executed -->
+            </form><!--end of form -->
+            <?php
                 $email = $_POST['email'];//get the inputted email 
                 $pass = $_POST['pass'];//get the inputted password
                 $sql = "SELECT * from UserInfo WHERE userEmail='$email'";//sql statement to get the associated password
@@ -43,10 +50,5 @@
                 }
                 //last updated 5/16/24 Broomy
             ?>
-            <form method="POST" action="login.php"><!-- this form on submit will send right back to this page where the php will be executed--> 
-                <input type="email" name="email" placeholder="Email" ><br><!--user will enter email -->
-                <input type="password" name="pass" placeholder="Password"><br><!--user will enter their password -->
-                <input type="submit"><!-- on click the php will be executed -->
-            </form><!--end of form -->
         </body>
     </html>

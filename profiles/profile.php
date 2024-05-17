@@ -49,16 +49,46 @@
                 } else {// if not print default
                     echo "<img id='profilePic' src='../userData/Avatar.jpg'></img>";
                 }//nav bar for easy access accross the website
-                echo "
-                <div class='dropdown'>
-                    <button class='dropbtn'>Menu</button>
-                        <div class='dropdown-content'>
-                            <a href='../Home/home.php'>home</a>
-                            <a href='../login/login.php'>login</a>
-                            <a href='../login/index.php'>register</a>
+                session_start();
+                if (isset($_SESSION['loggedin'])) {
+                    if ($_SESSION['loggedin']) {
+                        $userId = $_SESSION['username'];
+                        echo "
+                        <div class='dropdown'>
+                            <button class='dropbtn'>Menu</button>
+                                <div class='dropdown-content'>
+                                    <a href='../Home/home.php'>home</a>
+                                    <a href='../profiles/profile.php?user=$userId'>My page</a>
+                                    <a href='../login/index.php'>register</a>
+                                    <a href='logout.php?logout=1&type=0'>logout</a>
+                                </div>
                         </div>
-                </div>
-                ";
+                        ";
+                    } else {
+                        echo "
+                        <div class='dropdown'>
+                            <button class='dropbtn'>Menu</button>
+                                <div class='dropdown-content'>
+                                    <a href='../Home/home.php'>home</a>
+                                    <a href='../login/index.php'>register</a>
+                                    <a href='../login/login.php'>login</a>
+                                </div>
+                        </div>
+                        ";
+                    }
+                } else {
+                    echo "
+                    <div class='dropdown'>
+                        <button class='dropbtn'>Menu</button>
+                            <div class='dropdown-content'>
+                                <a href='../Home/home.php'>home</a>
+                                <a href='../login/index.php'>register</a>
+                                <a href='../login/login.php'>login</a>
+                            </div>
+                    </div>
+                    ";
+                }
+                
                 session_start();//start to allow the user to remove aspects of their profile
                 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {//do some checks make sure the user is even logged in first
                     if ($_SESSION['username'] == $userId) {//check their userId

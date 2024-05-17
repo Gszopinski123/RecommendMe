@@ -6,16 +6,46 @@
         </head>
         <body>
             <?php
+            session_start();
+            if (isset($_SESSION['loggedin'])) {
+                if ($_SESSION['loggedin']) {s
+                    $userId = $_SESSION['username'];
+                    echo "
+                    <div class='dropdown'>
+                        <button class='dropbtn'>Menu</button>
+                            <div class='dropdown-content'>
+                                <a href='../Home/home.php'>home</a>
+                                <a href='../profiles/profile.php?user=$userId'>My page</a>
+                                <a href='../login/index.php'>register</a>
+                                <a href='logout.php?logout=1&type=0'>logout</a>
+                            </div>
+                    </div>
+                    ";
+                } else {
+                    echo "
+                    <div class='dropdown'>
+                        <button class='dropbtn'>Menu</button>
+                            <div class='dropdown-content'>
+                                <a href='../Home/home.php'>home</a>
+                                <a href='../login/index.php'>register</a>
+                                <a href='../login/login.php'>login</a>
+                            </div>
+                    </div>
+                    ";
+                }
+            } else {
                 echo "
-                <div class='dropdown'>
-                    <button class='dropbtn'>Menu</button>
-                        <div class='dropdown-content'>
-                            <a href='../Home/home.php'>home</a>
-                            <a href='../login/login.php'>login</a>
-                            <a href='../login/index.php'>register</a>
-                        </div>
-                </div>
-                ";
+                    <div class='dropdown'>
+                        <button class='dropbtn'>Menu</button>
+                            <div class='dropdown-content'>
+                                <a href='../Home/home.php'>home</a>
+                                <a href='../login/index.php'>register</a>
+                                <a href='../login/login.php'>login</a>
+                            </div>
+                    </div>
+                    ";
+            }
+                
                 session_start();//session to save users info so they staying across the server
                 if (isset($_COOKIE['username']) && (!isset($_SESSION['loggedin']))) {
                     include("../config/cookie.php");
@@ -34,27 +64,15 @@
                 }
                 include('../config/session.php');//see if a user is logged in or not
                 if ($loggedIn) {//if they are logged in allow them to logout
-                    echo "Welcome back ".$_SESSION["firstname"]." ".$_SESSION['lastname']."!<br><br>";
-                    echo "<button onclick='phpLogout()'>Click here to logout!</button>";
+                    echo "<p class='welcome'>Welcome back ".$_SESSION["firstname"]." ".$_SESSION['lastname']."!</p><br>";
                 } else {//if not allow them to login 
-                    echo "Welcome!<br><br>";
-                    echo "<a href='../login/login.php'>Please Login Here</a><br>";
+                    echo "<p class='welcome'>Welcome!</p><br>";
                 }
                 //last updated 5/16/24 Broomy
             ?>
-            <script>
-                function phpLogout() {//function to be used on click
-                    const xhttp = new XMLHttpRequest();//ajax request
-                    xhttp.onload = function() {//onload determine if the user is no longer logged in
-                    }
-                    xhttp.open("GET","logout.php?logout=1",true);//how we are gonna logout the user
-                    xhttp.send();//send the info
-                    location.reload()//reload the page
-                }
-            </script>
-            <h1>Search For Users!</h1>
-            <input id="userText">
-            <button onclick="searchForUser()">Search</button>
+            <h1 class="center">Search For Users!</h1>
+            <center><input id="userText">
+            <button class="center" onclick="searchForUser()">Search</button></center>
             <p id="found"></p>
             <script>
                 function searchForUser() {

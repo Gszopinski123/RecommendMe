@@ -7,26 +7,61 @@
 		</head>
 		<body>
 			<?php
-				echo "
-				<div class='dropdown'>
-					<button class='dropbtn'>Menu</button>
-						<div class='dropdown-content'>
-							<a href='../Home/home.php'>home</a>
-							<a href='../login/login.php'>login</a>
-							<a href='../login/index.php'>register</a>
+				session_start();
+				if (isset($_SESSION['loggedin'])) {
+					if ($_SESSION['loggedin']) {
+						$userId = $_SESSION['username'];
+						echo "
+						<div class='dropdown'>
+							<button class='dropbtn'>Menu</button>
+								<div class='dropdown-content'>
+									<a href='../Home/home.php'>home</a>
+									<a href='../profiles/profile.php?user=$userId'>My page</a>
+									<a href='../login/index.php'>register</a>
+									<a href='../Home/logout.php?logout=1&type=0'>logout</a>
+								</div>
 						</div>
-				</div>
-				";
+						";
+					} else {
+						echo "
+						<div class='dropdown'>
+							<button class='dropbtn'>Menu</button>
+								<div class='dropdown-content'>
+									<a href='../Home/home.php'>home</a>
+									<a href='index.php'>register</a>
+									<a href='login.php'>login</a>
+								</div>
+						</div>
+						";
+					}
+				} else {
+					echo "
+						<div class='dropdown'>
+							<button class='dropbtn'>Menu</button>
+								<div class='dropdown-content'>
+									<a href='../Home/home.php'>home</a>
+									<a href='index.php'>register</a>
+									<a href='login.php'>login</a>
+								</div>
+						</div>
+						";
+				}
 			?>
-			<p>This is the Register page!</p>
-			<form name="register" onsubmit="return verify();"action="post.php" method="POST"><!--This will tell form what action to take and what to do -->
-				<input type="text" name="first" placeholder="First Name" required><br><!-- firstname input-->
-				<input type="text" name="last" placeholder="Last Name" required><br><!--lastname input -->
-				<input type="text" name="user" placeholder="Username" required><br><!-- username input-->
-				<input type="text" name="email" placeholder="Email" required><br><!-- email input -->
-				<input id="pass" type="password" name="pass" placeholder="Password" required><br><!-- password input-->
-				<p id="mess"></p><!-- extra for user later-->
-				<input type="submit" value="submit"><!-- allows user to attempt to submit -->
+			<p id="center">This is the Register page!</p>
+			<form id="center" name="register" onsubmit="return verify();"action="post.php" method="POST"><!--This will tell form what action to take and what to do -->
+				<input class="input" type="text" name="first" placeholder="First Name" required><br><br><!-- firstname input-->
+				<input class="input" type="text" name="last" placeholder="Last Name" required><br><br><!--lastname input -->
+				<input class="input" type="text" name="user" placeholder="Username" required><br><br><!-- username input-->
+				<input class="input" type="text" name="email" placeholder="Email" required><br><br><!-- email input -->
+				<input class="input" id="pass"  type="password" name="pass" placeholder="Password" required><br><!-- password input-->
+				<p id="mess">password needs to contain at least:<br>  
+					1 uppercase letter,<br> 
+					1 lowercase letter,<br> 
+					1 special character '!@#$%*&^?/' etc,<br> 
+					1 number character,<br> 
+					and 10 characters long
+				</p><!-- extra for user later-->
+				<input type="submit" value="Register"><!-- allows user to attempt to submit -->
 				<script>//script used to verify password is the correct length and other factors
 					function upperCase(str) {//will test for upper case letters
 						for (let i =0; i < str.length; i++) {//uses ascii
