@@ -6,7 +6,22 @@
         </head>
         <body>
             <?php
-            session_start();
+            session_start();//session to save users info so they staying across the server
+            if (isset($_COOKIE['username']) && (!isset($_SESSION['loggedin']))) {
+                include("../config/cookie.php");
+                include("../config/config.php");
+                $sql = "SELECT * from UserInfo WHERE userEmail='$userEmail'";//sql statement to get the associated password
+                $result = $mysqli->query($sql);//run the query and get the information
+                $row = $result->fetch_assoc();//now run the rows
+                if (password_verify($userPassword,$row['password'])) {
+                    $_SESSION['username'] = $row['userName'];//save the username
+                    $_SESSION['firstname'] = $row['firstName'];//save the firstname
+                    $_SESSION['lastname'] = $row['lastName'];//save the lastname
+                    $_SESSION['password'] = $row['password'];//save the password hashed out use for later
+                    $_SESSION['useremail'] = $userEmail;//save user email
+                    $_SESSION['loggedin'] = 1;//see if the user is logged in
+                }
+            }
             if (isset($_SESSION['loggedin'])) {
                 if ($_SESSION['loggedin']) {
                     $userId = $_SESSION['username'];
@@ -46,22 +61,7 @@
                     ";
             }
                 
-                session_start();//session to save users info so they staying across the server
-                if (isset($_COOKIE['username']) && (!isset($_SESSION['loggedin']))) {
-                    include("../config/cookie.php");
-                    include("../config/config.php");
-                    $sql = "SELECT * from UserInfo WHERE userEmail='$userEmail'";//sql statement to get the associated password
-                    $result = $mysqli->query($sql);//run the query and get the information
-                    $row = $result->fetch_assoc();//now run the rows
-                    if (password_verify($userPassword,$row['password'])) {
-                        $_SESSION['username'] = $row['userName'];//save the username
-                        $_SESSION['firstname'] = $row['firstName'];//save the firstname
-                        $_SESSION['lastname'] = $row['lastName'];//save the lastname
-                        $_SESSION['password'] = $row['password'];//save the password hashed out use for later
-                        $_SESSION['useremail'] = $userEmail;//save user email
-                        $_SESSION['loggedin'] = 1;//see if the user is logged in
-                    }
-                }
+                
                 include('../config/session.php');//see if a user is logged in or not
                 if ($loggedIn) {//if they are logged in allow them to logout
                     echo "<p class='welcome'>Welcome back ".$_SESSION["firstname"]." ".$_SESSION['lastname']."!</p><br>";
