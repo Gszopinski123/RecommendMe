@@ -62,6 +62,14 @@
 					and 10 characters long
 				</p><!-- extra for user later-->
 				<input type="submit" value="Register"><!-- allows user to attempt to submit -->
+				<?php
+				if (isset($_REQUEST['exists'])) {
+					if ($_REQUEST['exists']) {
+						echo "<p id='mess'>There is an account with that username!</p>";
+					}
+				}
+				?>
+				
 				<script>//script used to verify password is the correct length and other factors
 					function upperCase(str) {//will test for upper case letters
 						for (let i =0; i < str.length; i++) {//uses ascii

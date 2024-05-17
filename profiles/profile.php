@@ -52,13 +52,13 @@
                 session_start();
                 if (isset($_SESSION['loggedin'])) {
                     if ($_SESSION['loggedin']) {
-                        $userId = $_SESSION['username'];
+                        $myuser = $_SESSION['username'];
                         echo "
                         <div class='dropdown'>
                             <button class='dropbtn'>Menu</button>
                                 <div class='dropdown-content'>
                                     <a href='../Home/home.php'>home</a>
-                                    <a href='../profiles/profile.php?user=$userId'>My page</a>
+                                    <a href='../profiles/profile.php?user=$myuser'>My page</a>
                                     <a href='../login/index.php'>register</a>
                                     <a href='../Home/logout.php?logout=1&type=0'>logout</a>
                                 </div>
@@ -88,7 +88,6 @@
                     </div>
                     ";
                 }
-                
                 session_start();//start to allow the user to remove aspects of their profile
                 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {//do some checks make sure the user is even logged in first
                     if ($_SESSION['username'] == $userId) {//check their userId

@@ -8,7 +8,7 @@
             <?php
             session_start();
             if (isset($_SESSION['loggedin'])) {
-                if ($_SESSION['loggedin']) {s
+                if ($_SESSION['loggedin']) {
                     $userId = $_SESSION['username'];
                     echo "
                     <div class='dropdown'>
@@ -73,7 +73,7 @@
             <h1 class="center">Search For Users!</h1>
             <center><input id="userText">
             <button class="center" onclick="searchForUser()">Search</button></center>
-            <p id="found"></p>
+            <p class="center" id="found"></p>
             <script>
                 function searchForUser() {
                     let userName = document.getElementById("userText").value;
